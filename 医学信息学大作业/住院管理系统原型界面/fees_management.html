@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>住院管理系统 - 住院费用管理</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">首页</a></li>
+                <li><a href="dashboard.html">仪表盘</a></li>
+                <li><a href="outpatient_sync.html">门诊信息同步</a></li>
+                <li><a href="admission_register.html">住院登记</a></li>
+                <li><a href="ward_management.html">病房管理</a></li>
+                <li><a href="fees_management.html">住院费用管理</a></li>
+                <li><a href="check_management.html">检查检验管理</a></li>
+                <li><a href="discharge_followup.html">出院随访</a></li>
+                <li><a href="permissions_management.html">用户权限管理</a></li>
+                <li><a href="system_settings.html">系统设置</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h1>住院费用管理</h1>
+
+            <h2>费用计算</h2>
+            <p>自动计算并显示患者住院费用。</p>
+            <form action="#">
+                <label for="patient-id">患者ID：</label>
+                <input type="text" id="patient-id" required><br><br>
+                <label for="stay-duration">住院天数：</label>
+                <input type="number" id="stay-duration" required><br><br>
+                <label for="cost-per-day">每日费用：</label>
+                <input type="number" id="cost-per-day" required><br><br>
+                <button type="submit">计算费用</button>
+            </form>
+
+            <h2>费用查询</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>患者姓名</th>
+                        <th>住院天数</th>
+                        <th>费用</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>张三</td>
+                        <td>5</td>
+                        <td>2000元</td>
+                        <td><button onclick="alert('生成结算单')">生成结算单</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+</body>
+</html>

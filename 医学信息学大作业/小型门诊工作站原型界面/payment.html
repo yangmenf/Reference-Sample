@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>缴费</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">首页</a></li>
+                <li class="dropdown">
+                    <a href="registration.html">挂号管理</a>
+                    <ul class="submenu">
+                        <li><a href="login-register.html">登录/注册</a></li>
+                        <li><a href="registration.html">挂号</a></li>
+                        <li><a href="walk-in.html">现场挂号</a></li>
+                        <li><a href="query.html">查询挂号</a></li>
+                        <li><a href="modify.html">修改挂号</a></li>
+                    </ul>
+                </li>
+                <li><a href="doctor-station.html">门诊医生工作站</a></li>
+                <li><a href="payment.html">缴费</a></li>
+                <li><a href="pharmacy.html">药房配药</a></li>
+                <li><a href="lab.html">检查检验科</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>缴费查询</h2>
+            <!-- 输入病人唯一可辨识的ID，查询相关账单信息 -->
+            <form id="bill-query-form">
+                <label for="id-card">请输入您的身份证号：</label>
+                <input type="text" id="id-card" name="id-card" required>
+                <button type="submit">查询账单</button>
+            </form>
+
+            <!-- 显示查询到的账单信息 -->
+            <div id="bill-info" style="display: none;">
+                <h3>账单详情</h3>
+                <p>账单号：<span id="bill-id">12345</span></p>
+                <p>姓名：<span id="patient-name">张三</span></p>
+                <p>就诊日期：<span id="visit-date">2024-12-15</span></p>
+                <p>需要缴费金额：<span id="total-amount">¥500.00</span></p>
+            </div>
+
+            <!-- 电子支付部分, 初始隐藏 -->
+            <div id="payment-info" style="display: none;">
+                <h2>电子支付</h2>
+                <p>需支付金额：<span id="online-amount">¥500.00</span></p>
+                <button id="pay-button">点击支付</button>
+            </div>
+
+            <h2>发票打印</h2>
+            <form id="invoice-query-form">
+                <label for="invoice-id">请输入您的身份证号查询发票：</label>
+                <input type="text" id="invoice-id" name="invoice-id" required>
+                <button type="submit">查询发票</button>
+            </form>
+
+            <!-- 显示查询到的发票信息 -->
+            <div id="invoice-info" style="display: none;">
+                <h3>您的发票列表</h3>
+                <ul id="invoice-list">
+                    <!-- 示例发票列表 -->
+                    <li><input type="checkbox" id="invoice1" name="invoice" value="发票1">
+                        <label for="invoice1">发票1 - 2024-12-10 - ¥500.00</label></li>
+                    <li><input type="checkbox" id="invoice2" name="invoice" value="发票2">
+                        <label for="invoice2">发票2 - 2024-12-11 - ¥300.00</label></li>
+                    <li><input type="checkbox" id="invoice3" name="invoice" value="发票3">
+                        <label for="invoice3">发票3 - 2024-12-12 - ¥200.00</label></li>
+                </ul>
+                <button id="print-invoice-button">打印发票</button>
+            </div>
+        </section>
+    </main>
+    <script>
+        // 模拟查询账单和处理支付
+        document.getElementById('bill-query-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // 防止表单默认提交
+
+            // 获取身份证号（模拟查询）
+            const idCard = document.getElementById('id-card').value;
+
+            // 示例身份证号，假设是有效的
+            if (idCard === "123456") {  // 假设这是一个有效身份证号
+                // 显示账单信息
+                document.getElementById('bill-info').style.display = 'block';
+
+                // 可以从后台获取更详细的数据并动态更新以下内容
+                document.getElementById('bill-id').textContent = "12345";  // 示例账单号
+                document.getElementById('patient-name').textContent = "张三";  // 示例病人姓名
+                document.getElementById('visit-date').textContent = "2024-12-15";  // 示例就诊日期
+                document.getElementById('total-amount').textContent = "¥500.00";  // 示例金额
+
+                // 设置在线支付金额
+                document.getElementById('online-amount').textContent = "¥500.00";  // 示例金额
+
+                // 显示电子支付区域
+                document.getElementById('payment-info').style.display = 'block';
+            } else {
+                alert("未找到相关账单信息，请检查您的身份证号！");
+            }
+        });
+
+        // 处理电子支付点击事件
+        document.getElementById('pay-button').addEventListener('click', function() {
+            alert("支付成功！您的缴费金额为：¥500.00");
+        });
+
+        // 模拟查询发票信息
+        document.getElementById('invoice-query-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // 防止表单默认提交
+
+            // 获取身份证号（模拟查询发票）
+            const invoiceId = document.getElementById('invoice-id').value;
+
+            if (invoiceId === "123456") {  // 假设这是一个有效身份证号
+                // 显示发票列表
+                document.getElementById('invoice-info').style.display = 'block';
+            } else {
+                alert("未找到相关发票信息，请检查您的身份证号！");
+            }
+        });
+
+        // 处理打印发票按钮点击事件
+        document.getElementById('print-invoice-button').addEventListener('click', function() {
+            // 获取选中的发票
+            const selectedInvoices = [];
+            const invoiceCheckboxes = document.querySelectorAll('input[name="invoice"]:checked');
+
+            invoiceCheckboxes.forEach(function(checkbox) {
+                selectedInvoices.push(checkbox.value);
+            });
+
+            if (selectedInvoices.length > 0) {
+                alert("打印发票成功！您选择了：" + selectedInvoices.join(', '));
+            } else {
+                alert("请先选择发票！");
+            }
+        });
+    </script>
+</body>
+</html>

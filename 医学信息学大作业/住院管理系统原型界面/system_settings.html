@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>住院管理系统 - 系统设置</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">首页</a></li>
+                <li><a href="dashboard.html">仪表盘</a></li>
+                <li><a href="outpatient_sync.html">门诊信息同步</a></li>
+                <li><a href="admission_register.html">住院登记</a></li>
+                <li><a href="ward_management.html">病房管理</a></li>
+                <li><a href="fees_management.html">住院费用管理</a></li>
+                <li><a href="check_management.html">检查检验管理</a></li>
+                <li><a href="discharge_followup.html">出院随访</a></li>
+                <li><a href="permissions_management.html">用户权限管理</a></li>
+                <li><a href="system_settings.html">系统设置</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h1>系统设置</h1>
+
+            <!-- 数据导入/导出 -->
+            <h2>数据导入/导出</h2>
+            <form action="#">
+                <label for="data-import">选择导入文件：</label>
+                <input type="file" id="data-import"><br><br>
+                <button type="submit">导入数据</button>
+            </form>
+            <form action="#">
+                <label for="data-export">导出数据：</label>
+                <select id="data-export" required>
+                    <option value="outpatient">门诊数据</option>
+                    <option value="hospitalization">住院数据</option>
+                </select><br><br>
+                <button type="submit">导出数据</button>
+            </form>
+
+            <!-- 系统日志 -->
+            <h2>系统日志</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>时间</th>
+                        <th>操作员</th>
+                        <th>操作内容</th>
+                        <th>操作详情</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2024-12-13 10:30</td>
+                        <td>管理员</td>
+                        <td>导入数据</td>
+                        <td>导入了门诊数据</td>
+                    </tr>
+                    <tr>
+                        <td>2024-12-13 11:00</td>
+                        <td>张医生</td>
+                        <td>修改患者信息</td>
+                        <td>修改了张三的入院记录</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+</body>
+</html>

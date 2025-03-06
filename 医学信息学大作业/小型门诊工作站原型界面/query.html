@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>挂号信息查询</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">首页</a></li>
+                <li class="dropdown">
+                    <a href="registration.html">挂号管理</a>
+                    <ul class="submenu">
+                        <li><a href="login-register.html">登录/注册</a></li>
+                        <li><a href="registration.html">挂号</a></li>
+                        <li><a href="walk-in.html">现场挂号</a></li>
+                        <li><a href="query.html">查询挂号</a></li>
+                        <li><a href="modify.html">修改挂号</a></li>
+                    </ul>
+                </li>
+                <li><a href="doctor-station.html">门诊医生工作站</a></li>
+                <li><a href="payment.html">缴费</a></li>
+                <li><a href="pharmacy.html">药房配药</a></li>
+                <li><a href="lab.html">检查检验科</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>挂号信息查询</h2>
+            <form id="query-form">
+                <label for="query-id">挂号单号：</label>
+                <input type="text" id="query-id" name="query-id" required>
+
+                <button type="submit">查询挂号信息</button>
+            </form>
+
+            <!-- 显示挂号信息 -->
+            <div id="registration-info" style="display: none;">
+                <h3>挂号信息</h3>
+                <p>挂号单号：<span id="registration-id">GH123456</span></p>
+                <p>患者姓名：<span id="patient-name">张三</span></p>
+                <p>科室：<span id="department">内科</span></p>
+                <p>医生：<span id="doctor-name">李医生</span></p>
+                <p>挂号时间：<span id="registration-time">2024-12-16 08:30</span></p>
+                <p>预约日期：<span id="appointment-date">2024-12-17</span></p>
+                <p>状态：<span id="status">已预约</span></p>
+            </div>
+
+            <!-- 提示信息 -->
+            <div id="no-record-message" style="color: red; display: none;">
+                <p>未找到对应的挂号信息，请检查挂号单号。</p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // 模拟数据库中的挂号信息
+        const mockData = {
+            "123456": {
+                patientName: "张三",
+                department: "内科",
+                doctorName: "李医生",
+                registrationTime: "2024-12-16 08:30",
+                appointmentDate: "2024-12-17",
+                status: "已预约"
+            },
+            "789012": {
+                patientName: "李四",
+                department: "外科",
+                doctorName: "王医生",
+                registrationTime: "2024-12-16 09:00",
+                appointmentDate: "2024-12-17",
+                status: "已预约"
+            }
+        };
+
+        // 查询挂号信息事件
+        document.getElementById('query-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // 防止表单提交刷新页面
+
+            const queryId = document.getElementById('query-id').value;
+
+            // 检查挂号单号是否存在
+            if (mockData[queryId]) {
+                const data = mockData[queryId];
+
+                // 显示查询结果
+                document.getElementById('registration-id').textContent = queryId;
+                document.getElementById('patient-name').textContent = data.patientName;
+                document.getElementById('department').textContent = data.department;
+                document.getElementById('doctor-name').textContent = data.doctorName;
+                document.getElementById('registration-time').textContent = data.registrationTime;
+                document.getElementById('appointment-date').textContent = data.appointmentDate;
+                document.getElementById('status').textContent = data.status;
+
+                document.getElementById('registration-info').style.display = 'block';
+                document.getElementById('no-record-message').style.display = 'none';
+            } else {
+                // 未找到挂号单号的记录
+                document.getElementById('registration-info').style.display = 'none';
+                document.getElementById('no-record-message').style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

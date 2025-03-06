@@ -1,0 +1,101 @@
+<!-- doctor-station.html -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>门诊医生工作站</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">首页</a></li>
+		<li class="dropdown">
+                    <a href="registration.html">挂号管理</a>
+                    <ul class="submenu">
+                        <li><a href="login-register.html">登录/注册</a></li>
+                        <li><a href="registration.html">挂号</a></li>
+                        <li><a href="walk-in.html">现场挂号</a></li>
+                        <li><a href="query.html">查询挂号</a></li>
+                        <li><a href="modify.html">修改挂号</a></li>
+                    </ul>
+                </li>
+                <li><a href="doctor-station.html">门诊医生工作站</a></li>
+                <li><a href="payment.html">缴费</a></li>
+                <li><a href="pharmacy.html">药房配药</a></li>
+                <li><a href="lab.html">检查检验科</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>医生登录</h2>
+            <form id="doctor-login">
+                <label for="doctor-username">医生用户名：</label>
+                <input type="text" id="doctor-username" name="doctor-username" required>
+
+                <label for="doctor-password">医生密码：</label>
+                <input type="password" id="doctor-password" name="doctor-password" required>
+
+                <button type="submit">登录</button>
+            </form>
+        </section>
+
+        <section id="doctor-portal" style="display: none;">
+            <h2>患者信息查看</h2>
+            <div>
+                <p>患者ID: 001</p>
+                <p>姓名: 张三</p>
+                <p>性别: 男</p>
+                <p>年龄: 45</p>
+                <p>联系方式: 13800138000</p>
+            </div>
+
+            <h2>诊断记录</h2>
+            <textarea id="diagnosis" name="diagnosis" rows="4" placeholder="请输入诊断信息..."></textarea>
+
+            <h2>处方开具</h2>
+            <textarea id="prescription" name="prescription" rows="4" placeholder="请输入处方信息..."></textarea>
+        </section>
+    </main>
+    <script>
+        document.getElementById('doctor-login').addEventListener('submit', function(event) {
+            event.preventDefault();
+            // 模拟登录成功，显示医生工作站界面
+            document.getElementById('doctor-portal').style.display = 'block';
+            // 清空登录表单
+            document.getElementById('doctor-username').value = '';
+            document.getElementById('doctor-password').value = '';
+        });
+    </script>
+<script>
+    // 判断当前页面是否属于挂号管理相关页面
+    function isRegistrationPage() {
+        var registrationPages = ['login-register.html', 'registration.html', 'walk-in.html', 'query.html', 'modify.html'];
+        var currentPath = window.location.pathname;
+        return registrationPages.some(page => currentPath.includes(page));
+    }
+
+    // 初始化导航菜单
+    function initNav() {
+        var nav = document.querySelector('nav');
+        var dropdown = document.querySelector('.dropdown ul');
+        if (isRegistrationPage()) {
+            dropdown.style.display = 'block';
+        } else {
+            nav.addEventListener('mouseover', function() {
+                dropdown.style.display = 'block';
+            });
+            nav.addEventListener('mouseout', function() {
+                dropdown.style.display = 'none';
+            });
+        }
+    }
+
+    // 页面加载完成后执行
+    window.onload = initNav;
+</script>
+</body>
+</html>

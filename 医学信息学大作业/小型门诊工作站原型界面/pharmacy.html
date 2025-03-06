@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>药房配药</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">首页</a></li>
+                <li class="dropdown">
+                    <a href="registration.html">挂号管理</a>
+                    <ul class="submenu">
+                        <li><a href="login-register.html">登录/注册</a></li>
+                        <li><a href="registration.html">挂号</a></li>
+                        <li><a href="walk-in.html">现场挂号</a></li>
+                        <li><a href="query.html">查询挂号</a></li>
+                        <li><a href="modify.html">修改挂号</a></li>
+                    </ul>
+                </li>
+                <li><a href="doctor-station.html">门诊医生工作站</a></li>
+                <li><a href="payment.html">缴费</a></li>
+                <li><a href="pharmacy.html">药房配药</a></li>
+                <li><a href="lab.html">检查检验科</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>药房配药</h2>
+            
+            <!-- 发放药品部分 -->
+            <h3>发放药品</h3>
+            <form id="dispense-form">
+                <label for="medicine-name">药品名称：</label>
+                <select id="medicine-name" required>
+                    <option value="阿莫西林">阿莫西林</option>
+                    <option value="头孢氨苄">头孢氨苄</option>
+                    <option value="氯霉素">氯霉素</option>
+                </select>
+                <label for="dispense-quantity">发放数量：</label>
+                <input type="number" id="dispense-quantity" name="dispense-quantity" min="1" required>
+                <button type="submit">发放药品</button>
+            </form>
+
+            <!-- 提示信息 -->
+            <div id="dispense-message" style="color: green; display: none;"></div>
+
+            <!-- 更新药品库存部分 -->
+            <h3>更新药品库存</h3>
+            <form id="update-stock-form">
+                <label for="update-medicine">药品名称：</label>
+                <select id="update-medicine" required>
+                    <option value="阿莫西林">阿莫西林</option>
+                    <option value="头孢氨苄">头孢氨苄</option>
+                    <option value="氯霉素">氯霉素</option>
+                </select>
+                <label for="update-quantity">更新数量：</label>
+                <input type="text" id="update-quantity" name="update-quantity" placeholder="+若干数量 或 -若干数量 或 数字" required>
+                <button type="submit">更新库存</button>
+            </form>
+
+            <!-- 当前库存 -->
+            <h3>当前药品库存</h3>
+            <table id="stock-table">
+                <tr>
+                    <th>药品名称</th>
+                    <th>库存数量</th>
+                </tr>
+                <tr>
+                    <td>阿莫西林</td>
+                    <td id="stock-amoxicillin">100</td>
+                </tr>
+                <tr>
+                    <td>头孢氨苄</td>
+                    <td id="stock-cephalexin">50</td>
+                </tr>
+                <tr>
+                    <td>氯霉素</td>
+                    <td id="stock-chloramphenicol">75</td>
+                </tr>
+            </table>
+
+            <!-- 处方审核部分 -->
+            <h3>处方审核</h3>
+            <form id="prescription-review-form">
+                <label for="prescription-id">请输入处方号：</label>
+                <input type="text" id="prescription-id" name="prescription-id" required>
+                <button type="submit">查看处方</button>
+            </form>
+
+            <!-- 显示处方信息 -->
+            <div id="prescription-info" style="display: none;">
+                <h4>处方详情</h4>
+                <p>处方号：<span id="prescription-number">12345</span></p>
+                <p>医生：<span id="doctor-name">李医生</span></p>
+                <p>药品：<span id="prescribed-medicine">阿莫西林</span></p>
+                <p>剂量：<span id="medicine-dose">250mg</span></p>
+                <button id="accept-prescription">接受</button>
+                <button id="reject-prescription">驳回</button>
+                <div id="rejection-reason" style="display: none;">
+                    <label for="reason">驳回理由：</label>
+                    <textarea id="reason" rows="3"></textarea>
+                    <button id="submit-reason">提交理由</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // 示例药品库存数据
+        let stock = {
+            "阿莫西林": 100,
+            "头孢氨苄": 50,
+            "氯霉素": 75
+        };
+
+        // 发放药品事件
+        document.getElementById('dispense-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // 防止表单提交刷新页面
+
+            const medicineName = document.getElementById('medicine-name').value;
+            const dispenseQuantity = parseInt(document.getElementById('dispense-quantity').value);
+
+            // 如果库存不足，提醒
+            if (stock[medicineName] < dispenseQuantity) {
+                alert("库存不足，无法发放该数量的药品！");
+                return;
+            }
+
+            // 更新库存
+            stock[medicineName] -= dispenseQuantity;
+
+            // 更新显示的库存数量
+            document.getElementById(`stock-${medicineName}`).textContent = stock[medicineName];
+
+            // 在页面上显示操作成功提示
+            document.getElementById('dispense-message').textContent = `成功发放 ${dispenseQuantity} 个 ${medicineName}。当前库存：${stock[medicineName]}`;
+            document.getElementById('dispense-message').style.display = 'block';
+        });
+
+        // 更新药品库存事件
+        document.getElementById('update-stock-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // 防止表单提交刷新页面
+
+            const updateMedicine = document.getElementById('update-medicine').value;
+            const updateQuantityInput = document.getElementById('update-quantity').value;
+            let updateQuantity = 0;
+
+            // 判断输入是增加(+)、减少(-)还是设置新库存(数字)
+            if (updateQuantityInput.startsWith('+')) {
+                updateQuantity = parseInt(updateQuantityInput.slice(1));
+                stock[updateMedicine] += updateQuantity;
+            } else if (updateQuantityInput.startsWith('-')) {
+                updateQuantity = parseInt(updateQuantityInput.slice(1));
+                stock[updateMedicine] -= updateQuantity;
+            } else if (isNaN(updateQuantityInput) === false) {
+                updateQuantity = parseInt(updateQuantityInput);
+                stock[updateMedicine] = updateQuantity; // 设置为新数量
+            } else {
+                alert("输入的数量格式不正确！");
+                return;
+            }
+
+            // 更新显示的库存数量
+            document.getElementById(`stock-${updateMedicine}`).textContent = stock[updateMedicine];
+
+            // 在页面上显示操作成功提示
+            alert(`${updateMedicine} 库存更新成功！当前库存：${stock[updateMedicine]}`);
+        });
+
+        // 处方审核事件
+        document.getElementById('prescription-review-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // 防止表单提交刷新页面
+
+            const prescriptionId = document.getElementById('prescription-id').value;
+
+            // 模拟查询处方号
+            if (prescriptionId === "123456") {
+                // 显示处方信息
+                document.getElementById('prescription-info').style.display = 'block';
+            } else {
+                alert("未找到相关处方信息，请检查处方号！");
+            }
+        });
+
+        // 驳回处方操作
+        document.getElementById('reject-prescription').addEventListener('click', function() {
+            document.getElementById('rejection-reason').style.display = 'block';
+        });
+
+        // 提交驳回理由
+        document.getElementById('submit-reason').addEventListener('click', function() {
+            const reason = document.getElementById('reason').value;
+            if (reason.trim() === "") {
+                alert("请填写驳回理由！");
+                return;
+            }
+            alert(`处方已驳回，驳回理由：${reason}`);
+        });
+
+        // 接受处方操作
+        document.getElementById('accept-prescription').addEventListener('click', function() {
+            alert("处方已接受！");
+        });
+    </script>
+</body>
+</html>

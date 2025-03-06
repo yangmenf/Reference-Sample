@@ -1,0 +1,94 @@
+<!-- 登录/注册和个人信息管理 -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户登录/注册</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">首页</a></li>
+                <li class="dropdown">
+                    <a href="registration.html">挂号管理</a>
+                    <ul class="submenu">
+                        <li><a href="login-register.html">登录/注册</a></li>
+                        <li><a href="registration.html">挂号</a></li>
+                        <li><a href="walk-in.html">现场挂号</a></li>
+                        <li><a href="query.html">查询挂号</a></li>
+                        <li><a href="modify.html">修改挂号</a></li>
+                    </ul>
+                </li>
+                <li><a href="doctor-station.html">门诊医生工作站</a></li>
+                <li><a href="payment.html">缴费</a></li>
+                <li><a href="pharmacy.html">药房配药</a></li>
+                <li><a href="lab.html">检查检验科</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>用户登录</h2>
+            <form action="#">
+                <label for="username">用户名：</label>
+                <input type="text" id="username" name="username" required>
+
+                <label for="password">密码：</label>
+                <input type="password" id="password" name="password" required>
+
+                <button type="submit">登录</button>
+            </form>
+
+            <h2>用户注册</h2>
+            <form action="#">
+                <label for="new-username">新用户名：</label>
+                <input type="text" id="new-username" name="new-username" required>
+
+                <label for="new-password">新密码：</label>
+                <input type="password" id="new-password" name="new-password" required>
+
+                <label for="new-email">手机号/邮箱：</label>
+                <input type="email" id="new-email" name="new-email" required>
+
+                <label for="new-captcha">验证码：</label>
+                <input type="text" id="new-captcha" name="new-captcha" required>
+
+                <button type="submit">注册</button>
+            </form>
+
+            <h2>个人信息管理</h2>
+            <a href="personal-info.html">管理个人信息</a>
+        </section>
+    </main>
+<script>
+    // 判断当前页面是否属于挂号管理相关页面
+    function isRegistrationPage() {
+        var registrationPages = ['login-register.html', 'registration.html', 'walk-in.html', 'query.html', 'modify.html'];
+        var currentPath = window.location.pathname;
+        return registrationPages.some(page => currentPath.includes(page));
+    }
+
+    // 初始化导航菜单
+    function initNav() {
+        var nav = document.querySelector('nav');
+        var dropdown = document.querySelector('.dropdown ul');
+        if (isRegistrationPage()) {
+            dropdown.style.display = 'block';
+        } else {
+            nav.addEventListener('mouseover', function() {
+                dropdown.style.display = 'block';
+            });
+            nav.addEventListener('mouseout', function() {
+                dropdown.style.display = 'none';
+            });
+        }
+    }
+
+    // 页面加载完成后执行
+    window.onload = initNav;
+</script>
+</body>
+</html>

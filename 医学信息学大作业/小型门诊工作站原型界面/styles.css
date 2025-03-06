@@ -1,0 +1,107 @@
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex; /* 横向排列 */
+    background-color: #333; /* 设置导航栏背景颜色为深灰色 */
+}
+
+nav > ul > li {
+    position: relative; /* 为子菜单提供定位基础 */
+}
+
+nav a {
+    display: block;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #fff; /* 设置导航栏字体颜色为白色 */
+}
+
+nav ul ul {
+    display: none; /* 默认隐藏子菜单 */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0s 0.3s;
+}
+
+nav ul li:hover > ul {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    background-color: #f0f0f0; /* 看到背景色的变化 */
+}
+
+nav ul .submenu li {
+    width: 200px;
+}
+
+nav ul li a:hover {
+    background-color: #ddd;
+}
+
+/* 修改主菜单字体颜色，确保可见性 */
+nav > ul > li > a {
+    color: #fff; /* 如果背景是深色，确保字体颜色是亮色 */
+}
+
+/* 如果需要，可以为子菜单添加额外的样式 */
+nav ul li ul li a {
+    color: #333; /* 子菜单字体颜色 */
+}
+
+nav ul li ul li a:hover {
+    background-color: #ddd;
+}
+
+main {
+    margin: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+}
+
+h1, h2 {
+    font-size: 24px;
+    color: #333;
+}
+
+form {
+    margin-top: 20px;
+}
+
+form label {
+    display: block;
+    margin: 8px 0 5px;
+}
+
+form input, form select, form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+form button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #45a049;
+}
+
+form button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}

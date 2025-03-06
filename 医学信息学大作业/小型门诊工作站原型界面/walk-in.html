@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>现场挂号</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">首页</a></li>
+                <li class="dropdown">
+                    <a href="registration.html">挂号管理</a>
+                    <ul class="submenu">
+                        <li><a href="login-register.html">登录/注册</a></li>
+                        <li><a href="registration.html">挂号</a></li>
+                        <li><a href="walk-in.html">现场挂号</a></li>
+                        <li><a href="query.html">查询挂号</a></li>
+                        <li><a href="modify.html">修改挂号</a></li>
+                    </ul>
+                </li>
+                <li><a href="doctor-station.html">门诊医生工作站</a></li>
+                <li><a href="payment.html">缴费</a></li>
+                <li><a href="pharmacy.html">药房配药</a></li>
+                <li><a href="lab.html">检查检验科</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>现场挂号</h2>
+        <form action="#">
+            <label for="department">科室：</label>
+            <select id="department" name="department">
+                <option value="department1">科室 A</option>
+                <option value="department2">科室 B</option>
+            </select>
+            <label for="doctor">医生：</label>
+            <select id="doctor" name="doctor">
+                <option value="doctor1">医生 A</option>
+                <option value="doctor2">医生 B</option>
+            </select>
+            <label for="date">挂号日期：</label>
+            <input type="date" id="date" name="date" required>
+            <button type="submit">现场挂号</button>
+        </form>
+    </main>
+    <script>
+        // 判断当前页面是否属于挂号管理相关页面
+        function isRegistrationPage() {
+            var registrationPages = ['login-register.html', 'registration.html', 'walk-in.html', 'query.html', 'modify.html'];
+            var currentPath = window.location.pathname;
+            return registrationPages.some(page => currentPath.includes(page));
+        }
+
+        // 初始化导航菜单
+        function initNav() {
+            var nav = document.querySelector('nav');
+            var dropdown = document.querySelector('.dropdown ul');
+            if (!dropdown) return; // 如果没有找到下拉菜单，直接返回
+            if (isRegistrationPage()) {
+                dropdown.style.display = 'block';
+            } else {
+                nav.addEventListener('mouseover', function() {
+                    dropdown.style.display = 'block';
+                });
+                nav.addEventListener('mouseout', function() {
+                    dropdown.style.display = 'none';
+                });
+            }
+        }
+
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', initNav);
+    </script>
+</body>
+</html>

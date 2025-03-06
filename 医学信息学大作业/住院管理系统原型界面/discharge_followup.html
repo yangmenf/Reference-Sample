@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>住院管理系统 - 出院随访</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">首页</a></li>
+                <li><a href="dashboard.html">仪表盘</a></li>
+                <li><a href="outpatient_sync.html">门诊信息同步</a></li>
+                <li><a href="admission_register.html">住院登记</a></li>
+                <li><a href="ward_management.html">病房管理</a></li>
+                <li><a href="fees_management.html">住院费用管理</a></li>
+                <li><a href="check_management.html">检查检验管理</a></li>
+                <li><a href="discharge_followup.html">出院随访</a></li>
+                <li><a href="permissions_management.html">用户权限管理</a></li>
+                <li><a href="system_settings.html">系统设置</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h1>出院随访</h1>
+
+            <!-- 随访计划制定 -->
+            <h2>随访计划制定</h2>
+            <form action="#">
+                <label for="patient-id">患者ID：</label>
+                <input type="text" id="patient-id" required><br><br>
+                <label for="followup-date">随访日期：</label>
+                <input type="date" id="followup-date" required><br><br>
+                <label for="followup-content">随访内容：</label>
+                <textarea id="followup-content" required></textarea><br><br>
+                <button type="submit">制定随访计划</button>
+            </form>
+
+            <!-- 随访记录 -->
+            <h2>随访记录</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>患者姓名</th>
+                        <th>患者ID</th>
+                        <th>随访日期</th>
+                        <th>随访内容</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>张三</td>
+                        <td>12345</td>
+                        <td>2024-12-15</td>
+                        <td>病情恢复良好，继续观察</td>
+                        <td><button>查看随访记录</button></td>
+                    </tr>
+                    <tr>
+                        <td>李四</td>
+                        <td>67890</td>
+                        <td>2024-12-20</td>
+                        <td>需要继续治疗</td>
+                        <td><button>查看随访记录</button></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- 健康指导 -->
+            <h2>健康指导</h2>
+            <form action="#">
+                <label for="health-advice">健康指导：</label>
+                <textarea id="health-advice" required></textarea><br><br>
+                <button type="submit">提交健康指导</button>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

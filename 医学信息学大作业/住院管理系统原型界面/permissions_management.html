@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>住院管理系统 - 用户权限管理</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">首页</a></li>
+                <li><a href="dashboard.html">仪表盘</a></li>
+                <li><a href="outpatient_sync.html">门诊信息同步</a></li>
+                <li><a href="admission_register.html">住院登记</a></li>
+                <li><a href="ward_management.html">病房管理</a></li>
+                <li><a href="fees_management.html">住院费用管理</a></li>
+                <li><a href="check_management.html">检查检验管理</a></li>
+                <li><a href="discharge_followup.html">出院随访</a></li>
+                <li><a href="permissions_management.html">用户权限管理</a></li>
+                <li><a href="system_settings.html">系统设置</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h1>用户权限管理</h1>
+
+            <!-- 权限设置 -->
+            <h2>权限设置</h2>
+            <form action="#">
+                <label for="user-id">用户ID：</label>
+                <input type="text" id="user-id" placeholder="请输入医生或护士ID" required><br><br>
+
+                <label for="user-role">选择角色：</label>
+                <select id="user-role" required>
+                    <option value="doctor">医生</option>
+                    <option value="nurse">护士</option>
+                    <option value="admin">管理员</option>
+                </select><br><br>
+
+                <label for="role-permissions">设置权限：</label><br>
+                <input type="checkbox" id="view-patient" name="permissions" value="view-patient">
+                <label for="view-patient">查看患者信息</label><br>
+                <input type="checkbox" id="edit-patient" name="permissions" value="edit-patient">
+                <label for="edit-patient">编辑患者信息</label><br>
+                <input type="checkbox" id="access-financial" name="permissions" value="access-financial">
+                <label for="access-financial">访问财务信息</label><br>
+                <input type="checkbox" id="manage-ward" name="permissions" value="manage-ward">
+                <label for="manage-ward">管理病房</label><br><br>
+
+                <button type="submit">保存权限设置</button>
+            </form>
+
+            <h2>当前用户权限</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>用户名</th>
+                        <th>角色</th>
+                        <th>权限</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>张医生</td>
+                        <td>医生</td>
+                        <td>查看患者信息, 编辑患者信息</td>
+                        <td><button>修改权限</button></td>
+                    </tr>
+                    <tr>
+                        <td>李护士</td>
+                        <td>护士</td>
+                        <td>查看患者信息</td>
+                        <td><button>修改权限</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+</body>
+</html>

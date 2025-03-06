@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>住院管理系统 - 检查检验管理</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">首页</a></li>
+                <li><a href="dashboard.html">仪表盘</a></li>
+                <li><a href="outpatient_sync.html">门诊信息同步</a></li>
+                <li><a href="admission_register.html">住院登记</a></li>
+                <li><a href="ward_management.html">病房管理</a></li>
+                <li><a href="fees_management.html">住院费用管理</a></li>
+                <li><a href="check_management.html">检查检验管理</a></li>
+                <li><a href="discharge_followup.html">出院随访</a></li>
+                <li><a href="permissions_management.html">用户权限管理</a></li>
+                <li><a href="system_settings.html">系统设置</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h1>检查检验管理</h1>
+
+            <!-- 检查预约 -->
+            <h2>检查预约</h2>
+            <form action="#">
+                <label for="patient-name">患者ID：</label>
+                <input type="text" id="patient-name" required><br><br>
+                <label for="check-type">检查项目：</label>
+                <select id="check-type" required>
+                    <option value="CT">CT扫描</option>
+                    <option value="MRI">MRI检查</option>
+                    <option value="X-ray">X光检查</option>
+                    <option value="Blood Test">血液检查</option>
+                </select><br><br>
+                <label for="check-date">预约日期：</label>
+                <input type="date" id="check-date" required><br><br>
+                <button type="submit">预约检查</button>
+            </form>
+
+            <!-- 结果录入 -->
+            <h2>结果录入</h2>
+            <form action="#">
+                <label for="check-id">检查ID：</label>
+                <input type="text" id="check-id" required><br><br>
+                <label for="result">结果：</label>
+                <textarea id="result" required></textarea><br><br>
+                <label for="upload-report">上传报告：</label>
+                <input type="file" id="upload-report"><br><br>
+                <button type="submit">提交结果</button>
+            </form>
+
+            <!-- 报告查询 -->
+            <h2>报告查询</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>患者姓名</th>
+                        <th>检查项目</th>
+                        <th>报告状态</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>张三</td>
+                        <td>CT扫描</td>
+                        <td>已上传</td>
+                        <td><button>查看报告</button></td>
+                    </tr>
+                    <tr>
+                        <td>李四</td>
+                        <td>血液检查</td>
+                        <td>待上传</td>
+                        <td><button>查看报告</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>住院管理系统 - 门诊信息同步</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">首页</a></li>
+                <li><a href="dashboard.html">仪表盘</a></li>
+                <li><a href="outpatient_sync.html">门诊信息同步</a></li>
+                <li><a href="admission_register.html">住院登记</a></li>
+                <li><a href="ward_management.html">病房管理</a></li>
+                <li><a href="fees_management.html">住院费用管理</a></li>
+                <li><a href="check_management.html">检查检验管理</a></li>
+                <li><a href="discharge_followup.html">出院随访</a></li>
+                <li><a href="permissions_management.html">用户权限管理</a></li>
+                <li><a href="system_settings.html">系统设置</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h1>门诊信息同步</h1>
+            <p>此页面显示接收到的门诊数据，并允许处理相关信息。</p>
+
+            <h2>门诊数据列表</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>患者姓名</th>
+                        <th>患者ID</th>
+                        <th>就诊日期</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>张三</td>
+                        <td>001</td>
+                        <td>2024-12-01</td>
+                        <td><button onclick="window.location.href='admission_register.html'">处理</button></td>
+                    </tr>
+                    <tr>
+                        <td>李四</td>
+                        <td>002</td>
+                        <td>2024-12-02</td>
+                        <td><button onclick="window.location.href='admission_register.html'">处理</button></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>门诊信息查询</h2>
+            <input type="text" placeholder="请输入患者姓名或ID" id="search">
+            <button onclick="alert('查询功能待实现')">查询</button>
+        </section>
+    </main>
+</body>
+</html>

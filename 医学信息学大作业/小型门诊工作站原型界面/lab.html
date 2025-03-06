@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>检查检验科</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">首页</a></li>
+		<li class="dropdown">
+                    <a href="registration.html">挂号管理</a>
+                    <ul class="submenu">
+                        <li><a href="login-register.html">登录/注册</a></li>
+                        <li><a href="registration.html">挂号</a></li>
+                        <li><a href="walk-in.html">现场挂号</a></li>
+                        <li><a href="query.html">查询挂号</a></li>
+                        <li><a href="modify.html">修改挂号</a></li>
+                    </ul>
+                </li>
+                <li><a href="doctor-station.html">门诊医生工作站</a></li>
+                <li><a href="payment.html">缴费</a></li>
+                <li><a href="pharmacy.html">药房配药</a></li>
+                <li><a href="lab.html">检查检验科</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>检查预约</h2>
+            <form id="appointment-form">
+                <label for="exam-type">检查类型：</label>
+                <select id="exam-type" name="exam-type" required>
+                    <option value="exam1">检查类型 A</option>
+                    <option value="exam2">检查类型 B</option>
+                </select>
+                <label for="exam-date">预约日期：</label>
+                <input type="date" id="exam-date" name="exam-date" required>
+                <button type="submit">预约</button>
+            </form>
+
+            <!-- 预约确认消息 -->
+            <div id="appointment-message" style="color: green; display: none;"></div>
+
+            <h2>结果录入</h2>
+            <form id="result-form">
+                <label for="result-id">检查ID：</label>
+                <input type="text" id="result-id" name="result-id" required>
+                <label for="result">检查结果：</label>
+                <textarea id="result" name="result" rows="4" required></textarea>
+                <button type="submit">录入结果</button>
+            </form>
+
+            <!-- 结果录入确认消息 -->
+            <div id="result-message" style="color: green; display: none;"></div>
+
+            <h2>报告查询</h2>
+            <form id="report-form">
+                <label for="report-id">报告号：</label>
+                <input type="text" id="report-id" name="report-id" required>
+                <button type="submit">查询报告</button>
+            </form>
+
+            <!-- 显示报告信息 -->
+            <div id="report-info" style="display: none;">
+                <h3>报告信息</h3>
+                <p>报告号：<span id="report-number">RPT123456</span></p>
+                <p>检查类型：<span id="exam-type-info">检查类型 A</span></p>
+                <p>检查结果：<span id="exam-result">正常</span></p>
+                <p>医生：<span id="doctor-name">王医生</span></p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // 预约检查事件
+        document.getElementById('appointment-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // 防止表单提交刷新页面
+
+            const examType = document.getElementById('exam-type').value;
+            const examDate = document.getElementById('exam-date').value;
+
+            // 在页面上显示预约成功信息
+            document.getElementById('appointment-message').textContent = `检查类型：${examType}，预约日期：${examDate}，预约成功！`;
+            document.getElementById('appointment-message').style.display = 'block';
+        });
+
+        // 录入检查结果事件
+        document.getElementById('result-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // 防止表单提交刷新页面
+
+            const resultId = document.getElementById('result-id').value;
+            const result = document.getElementById('result').value;
+
+            // 显示结果录入成功消息
+            document.getElementById('result-message').textContent = `检查ID：${resultId}，检查结果已成功录入：${result}`;
+            document.getElementById('result-message').style.display = 'block';
+        });
+
+        // 查询报告事件
+        document.getElementById('report-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // 防止表单提交刷新页面
+
+            const reportId = document.getElementById('report-id').value;
+
+            // 假设报告号为 "123456" 的报告数据
+            if (reportId === "123456") {
+                document.getElementById('report-info').style.display = 'block';
+            } else {
+                alert("未找到报告信息，请检查报告号！");
+            }
+        });
+    </script>
+</body>
+</html>

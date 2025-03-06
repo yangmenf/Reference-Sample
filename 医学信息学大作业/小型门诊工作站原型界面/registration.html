@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>预约挂号</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">首页</a></li>
+                <li class="dropdown">
+                    <a href="registration.html">挂号管理</a>
+                    <ul class="submenu">
+                        <li><a href="login-register.html">登录/注册</a></li>
+                        <li><a href="registration.html">挂号</a></li>
+                        <li><a href="walk-in.html">现场挂号</a></li>
+                        <li><a href="query.html">查询挂号</a></li>
+                        <li><a href="modify.html">修改挂号</a></li>
+                    </ul>
+                </li>
+                <li><a href="doctor-station.html">门诊医生工作站</a></li>
+                <li><a href="payment.html">缴费</a></li>
+                <li><a href="pharmacy.html">药房配药</a></li>
+                <li><a href="lab.html">检查检验科</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>预约挂号</h2>
+        <form id="registration-form">
+            <label for="department">科室：</label>
+            <select id="department" name="department">
+                <option value="department1">科室 A</option>
+                <option value="department2">科室 B</option>
+            </select>
+            <label for="doctor">医生：</label>
+            <select id="doctor" name="doctor">
+                <option value="doctor1">医生 A</option>
+                <option value="doctor2">医生 B</option>
+            </select>
+            <label for="date">预约日期：</label>
+            <input type="date" id="date" name="date" required>
+            <button type="submit">预约挂号</button>
+        </form>
+
+        <!-- 操作成功提示信息 -->
+        <div id="success-message" style="display: none; color: green;">
+            <p>挂号预约成功！您的挂号已经完成。</p>
+        </div>
+    </main>
+
+    <script>
+        // 模拟一些示例数据
+        const mockDoctors = {
+            "department1": ["医生 A", "医生 B"],
+            "department2": ["医生 C", "医生 D"]
+        };
+
+        // 当科室改变时更新医生列表
+        document.getElementById("department").addEventListener("change", function() {
+            const department = this.value;
+            const doctorSelect = document.getElementById("doctor");
+
+            // 清空当前的医生选项
+            doctorSelect.innerHTML = "";
+
+            // 根据科室选择更新医生选项
+            mockDoctors[department].forEach(function(doctor) {
+                const option = document.createElement("option");
+                option.value = doctor;
+                option.textContent = doctor;
+                doctorSelect.appendChild(option);
+            });
+        });
+
+        // 预约挂号表单提交事件
+        document.getElementById("registration-form").addEventListener("submit", function(event) {
+            event.preventDefault();  // 阻止表单默认提交行为
+
+            // 获取用户选择的科室、医生和预约日期
+            const department = document.getElementById("department").value;
+            const doctor = document.getElementById("doctor").value;
+            const date = document.getElementById("date").value;
+
+            // 模拟处理挂号操作
+            setTimeout(function() {
+                // 显示操作成功的提示信息
+                document.getElementById("success-message").style.display = "block";
+
+                // 隐藏表单
+                document.getElementById("registration-form").style.display = "none";
+            }, 500);
+        });
+    </script>
+</body>
+</html>
