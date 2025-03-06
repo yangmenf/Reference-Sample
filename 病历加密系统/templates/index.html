@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>病历加密解密</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+<div class="container">
+    <h1>病历加密解密系统</h1>
+
+    <!-- 加密部分 -->
+    <div class="section">
+        <h2>加密病历</h2>
+        <form id="medical-record-form">
+            <label for="patient-id">患者ID：</label>
+            <input type="text" id="patient-id" required>
+            <br><br>
+
+            <label for="doctor-id">医生ID：</label>
+            <input type="text" id="doctor-id" required>
+            <br><br>
+
+            <label for="patient-info">患者信息：</label>
+            <textarea id="patient-info" required></textarea>
+            <br><br>
+
+            <label for="doctor-diagnosis">医生诊断：</label>
+            <textarea id="doctor-diagnosis" required></textarea>
+            <br><br>
+
+            <button type="submit">提交加密</button>
+        </form>
+
+        <div id="result" style="display: none;">
+            <h3>加密结果</h3>
+            <label for="encrypted-data">加密后的数据：</label>
+            <textarea id="encrypted-data" readonly></textarea>
+            <br><br>
+
+            <label for="encrypted-aes-key">加密后的AES密钥：</label>
+            <textarea id="encrypted-aes-key" readonly></textarea>
+        </div>
+    </div>
+
+    <!-- 解密部分 -->
+    <div class="section">
+        <h2>解密病历</h2>
+        <form id="decryption-form">
+            <label for="select-file">选择加密病历文件：</label>
+            <input type="file" id="select-file" accept=".txt" required>
+            <br><br>
+
+            <button type="submit">解密病历</button>
+        </form>
+
+        <div id="decryption-result" style="display: none;">
+            <h3>解密结果</h3>
+            <label for="decrypted-data">解密后的数据：</label>
+            <textarea id="decrypted-data" readonly></textarea>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 加密表单的处理
+    document.getElementById('medical-record-form').addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        const patientId = document.getElementById('patient-id').value;
+        const doctorId = document.getElementById('doctor-id').value;
+        const patientInfo = document.getElementById('patient-info').value;
+        const doctorDiagnosis = document.getElementById('doctor-diagnosis').value;
+
+        const response = await fetch('/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                patient_id: patientId,
+                doctor_id: doctorId,
+                patient_info: patientInfo,
+                doctor_diagnosis: doctorDiagnosis
+            }),
+        });
+
+        const result = await response.json();
+
+        // 显示加密后的数据和AES密钥
+        document.getElementById('encrypted-data').value = result.encrypted_data;
+        document.getElementById('encrypted-aes-key').value = result.aes_key;
+        document.getElementById('result').style.display = 'block';
+    });
+
+    // 解密表单的处理
+    document.getElementById('decryption-form').addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        const fileInput = document.getElementById('select-file');
+
+        // 获取选中的文件
+        const file = fileInput.files[0];
+        if (!file) {
+            alert('请先选择一个病历文件');
+            return;
+        }
+
+        // 读取文件内容
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+            const fileData = e.target.result;
+            const formData = new FormData();
+            formData.append('file', file);
+
+            // 发送 FormData 数据到后端
+            const response = await fetch('/upload', {
+                method: 'POST',
+                body: formData,
+            });
+
+            const result = await response.json();
+            if (result.decrypted_data) {
+                document.getElementById('decrypted-data').value = result.decrypted_data;
+                document.getElementById('decryption-result').style.display = 'block';
+            } else {
+                alert('解密失败: ' + result.error);
+            }
+        };
+        reader.readAsText(file);
+    });
+</script>
+</body>
+</html>
