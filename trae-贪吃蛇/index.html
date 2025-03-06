@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>贪吃蛇游戏</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        font-family: "Microsoft YaHei", Arial, sans-serif;
+        min-height: 100vh;
+        margin: 0;
+        padding: 20px;
+        color: white;
+      }
+
+      .game-title {
+        font-size: 36px;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      #game-container {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        backdrop-filter: blur(4px);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+      }
+
+      #game-canvas {
+        border: 3px solid rgba(255, 255, 255, 0.5);
+        border-radius: 10px;
+        background-color: rgba(0, 0, 0, 0.2);
+      }
+
+      #score-container {
+        margin: 15px 0;
+        font-size: 24px;
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 20px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+      }
+
+      .score-label {
+        font-weight: bold;
+      }
+
+      #start-btn {
+        width: 100%;
+        margin-top: 15px;
+        padding: 12px 25px;
+        font-size: 20px;
+        background: linear-gradient(45deg, #4caf50, #45a049);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        font-weight: bold;
+        letter-spacing: 1px;
+      }
+
+      #start-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      .controls-info {
+        margin-top: 20px;
+        text-align: center;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .game-over {
+        animation: pulse 2s infinite;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="game-title">贪吃蛇大作战</h1>
+    <div id="game-container">
+      <canvas id="game-canvas" width="400" height="400"></canvas>
+      <div id="score-container">
+        <span class="score-label">当前分数：</span>
+        <span id="score">0</span>
+      </div>
+      <button id="start-btn">开始游戏</button>
+      <div class="controls-info">使用方向键 ↑ ↓ ← → 控制蛇的移动</div>
+    </div>
+    <script>
+      // 获取画布和上下文
+      const canvas = document.getElementById("game-canvas");
+      const ctx = canvas.getContext("2d");
+      const startBtn = document.getElementById("start-btn");
+      const scoreElement = document.getElementById("score");
+
+      // 游戏配置
+      const gridSize = 20;
+      const tileCount = canvas.width / gridSize;
+      let score = 0;
+      let gameLoop = null;
+
+      // 蛇的初始位置和速度
+      let snake = [{ x: 10, y: 10 }];
+      let velocity = { x: 0, y: 0 };
+
+      // 食物位置
+      let food = { x: 15, y: 15 };
+
+      // 游戏主循环
+      function gameUpdate() {
+        // 移动蛇
+        const head = { x: snake[0].x + velocity.x, y: snake[0].y + velocity.y };
+        snake.unshift(head);
+
+        // 检查是否吃到食物
+        if (head.x === food.x && head.y === food.y) {
+          score += 10;
+          scoreElement.textContent = score;
+          generateFood();
+        } else {
+          snake.pop();
+        }
+
+        // 检查游戏结束条件
+        if (isGameOver()) {
+          clearInterval(gameLoop);
+          alert("游戏结束！得分：" + score);
+          return;
+        }
+
+        // 绘制游戏画面
+        draw();
+      }
+
+      // 绘制游戏画面
+      function draw() {
+        // 清空画布
+        ctx.fillStyle = "white";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // 绘制蛇和食物
+        ctx.fillStyle = "green";
+        snake.forEach((segment) => {
+          ctx.fillRect(
+            segment.x * gridSize,
+            segment.y * gridSize,
+            gridSize - 2,
+            gridSize - 2
+          );
+        });
+        ctx.fillStyle = "red";
+        ctx.fillRect(
+          food.x * gridSize,
+          food.y * gridSize,
+          gridSize - 2,
+          gridSize - 2
+        );
+      }
+
+      // 生成新的食物位置
+      function generateFood() {
+        food.x = Math.floor(Math.random() * tileCount);
+        food.y = Math.floor(Math.random() * tileCount);
+      }
+
+      // 检查游戏是否结束
+      function isGameOver() {
+        // 撞墙
+        if (
+          snake[0].x < 0 ||
+          snake[0].x >= tileCount ||
+          snake[0].y < 0 ||
+          snake[0].y >= tileCount
+        ) {
+          return true;
+        }
+
+        // 撞到自己
+        for (let i = 1; i < snake.length; i++) {
+          if (snake[i].x === snake[0].x && snake[i].y === snake[0].y) {
+            return true;
+          }
+        }
+        return false;
+      }
+
+      // 键盘控制
+      document.addEventListener("keydown", (e) => {
+        switch (e.key) {
+          case "ArrowUp":
+            if (velocity.y !== 1) velocity = { x: 0, y: -1 };
+            break;
+          case "ArrowDown":
+            if (velocity.y !== -1) velocity = { x: 0, y: 1 };
+            break;
+          case "ArrowLeft":
+            if (velocity.x !== 1) velocity = { x: -1, y: 0 };
+            break;
+          case "ArrowRight":
+            if (velocity.x !== -1) velocity = { x: 1, y: 0 };
+            break;
+        }
+      });
+
+      // 开始游戏按钮点击事件
+      startBtn.addEventListener("click", () => {
+        // 重置游戏状态
+        snake = [{ x: 10, y: 10 }];
+        velocity = { x: 0, y: 0 };
+        score = 0;
+        scoreElement.textContent = score;
+        generateFood();
+
+        // 清除之前的游戏循环
+        if (gameLoop) clearInterval(gameLoop);
+
+        // 开始新的游戏循环
+        gameLoop = setInterval(gameUpdate, 100);
+      });
+    </script>
+  </body>
+</html>
