@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>个人任务管理系统</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>个人任务管理系统</h1>
+        <div class="theme-toggle">
+          <i class="fas fa-moon"></i>
+          <i class="fas fa-sun"></i>
+          <div class="toggle-ball"></div>
+        </div>
+      </header>
+
+      <div class="task-form">
+        <input type="text" id="taskInput" placeholder="添加新任务..." />
+        <select id="taskPriority">
+          <option value="低">低优先级</option>
+          <option value="中" selected>中优先级</option>
+          <option value="高">高优先级</option>
+        </select>
+        <input type="date" id="taskDueDate" />
+        <button id="addTask">添加</button>
+      </div>
+
+      <div class="filter-container">
+        <div class="filter">
+          <label for="filterStatus">状态:</label>
+          <select id="filterStatus">
+            <option value="all">全部</option>
+            <option value="active">进行中</option>
+            <option value="completed">已完成</option>
+          </select>
+        </div>
+        <div class="filter">
+          <label for="filterPriority">优先级:</label>
+          <select id="filterPriority">
+            <option value="all">全部</option>
+            <option value="低">低</option>
+            <option value="中">中</option>
+            <option value="高">高</option>
+          </select>
+        </div>
+        <div class="search">
+          <input type="text" id="searchInput" placeholder="搜索任务..." />
+        </div>
+      </div>
+
+      <div class="task-stats">
+        <div class="stat">总任务: <span id="totalTasks">0</span></div>
+        <div class="stat">已完成: <span id="completedTasks">0</span></div>
+        <div class="stat">进行中: <span id="activeTasks">0</span></div>
+      </div>
+
+      <div class="task-list" id="taskList">
+        <!-- 任务将通过 JavaScript 动态添加 -->
+      </div>
+
+      <div class="task-actions">
+        <button id="clearCompleted">清除已完成</button>
+        <button id="saveToLocal">保存到本地</button>
+        <button id="exportTasks">导出任务</button>
+      </div>
+    </div>
+
+    <footer>
+      <p>个人任务管理系统 &copy; 2023</p>
+    </footer>
+
+    <script src="js/app.js"></script>
+  </body>
+</html>
